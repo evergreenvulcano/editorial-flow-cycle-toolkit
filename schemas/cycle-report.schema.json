@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cycle-report.schema.json",
+  "title": "Cycle Report",
+  "description": "Schema for an Editorial Flow Cycle report.",
+  "type": "object",
+  "required": [
+    "cycleId",
+    "date",
+    "operator",
+    "materialId",
+    "materialType",
+    "cycleVersion",
+    "stations",
+    "summary"
+  ],
+  "properties": {
+    "cycleId": {
+      "type": "string",
+      "description": "Unique identifier for this cycle, e.g. CYCLE-2024-001."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the cycle was run (YYYY-MM-DD)."
+    },
+    "operator": {
+      "type": "string",
+      "description": "Name or role of the person running the cycle."
+    },
+    "materialId": {
+      "type": "string",
+      "description": "Identifier for the material being cycled."
+    },
+    "materialType": {
+      "type": "string",
+      "description": "Type of material, e.g. draft essay, research note, landing page candidate, design memo."
+    },
+    "cycleVersion": {
+      "type": "string",
+      "description": "Version of the cycle model used, e.g. v0.1."
+    },
+    "stations": {
+      "type": "array",
+      "description": "Records for each station processed in this cycle.",
+      "items": {
+        "type": "object",
+        "required": ["stationNumber", "stationName", "outcome"],
+        "properties": {
+          "stationNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 11,
+            "description": "Station number (1–11)."
+          },
+          "stationName": {
+            "type": "string",
+            "description": "Station name."
+          },
+          "outcome": {
+            "$ref": "#/definitions/statusOutcome"
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Brief rationale for the outcome at this station."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes for this station. Optional."
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "summary": {
+      "type": "object",
+      "required": ["overallOutcome", "materialStatusAtEnd"],
+      "properties": {
+        "overallOutcome": {
+          "$ref": "#/definitions/statusOutcome"
+        },
+        "materialStatusAtEnd": {
+          "type": "string",
+          "description": "The material's status at the end of the cycle."
+        },
+        "gatesPassed": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of gates that returned PASS or READY."
+        },
+        "gatesHeld": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of gates that returned HOLD, RETURN or STOP."
+        },
+        "whatCanHappenNext": {
+          "type": "string",
+          "description": "Description of valid next actions."
+        },
+        "whatMustNotHappenNext": {
+          "type": "string",
+          "description": "Description of explicitly prohibited next actions."
+        },
+        "artefactsProduced": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of artefacts produced during this cycle, by ID. Empty if only the cycle report was produced."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "statusOutcome": {
+      "type": "string",
+      "enum": ["PASS", "HOLD", "RETURN", "EXTRACT_ONLY", "PROPOSAL", "READY", "NO_EVENT", "STOP"],
+      "description": "One of the eight valid cycle outcomes."
+    }
+  }
+}

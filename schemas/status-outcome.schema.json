@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "status-outcome.schema.json",
+  "title": "Status Outcome",
+  "description": "Schema for the eight valid outcomes that may be returned at any station in an editorial flow cycle.",
+  "type": "string",
+  "enum": ["PASS", "HOLD", "RETURN", "EXTRACT_ONLY", "PROPOSAL", "READY", "NO_EVENT", "STOP"],
+  "definitions": {
+    "outcomeDescriptions": {
+      "PASS": "Gate condition met. Material may continue to the next station.",
+      "HOLD": "Gate condition not met. Material stays at current station pending further action.",
+      "RETURN": "Material sent back to a previous station.",
+      "EXTRACT_ONLY": "A method or pattern is extracted. The source material is not promoted.",
+      "PROPOSAL": "A proposal has been written. The proposal requires explicit human acceptance before any action is taken.",
+      "READY": "Material confirmed ready for the next gate to evaluate.",
+      "NO_EVENT": "Cycle completed this station with no change in status and no artefact produced.",
+      "STOP": "Cycle ends. No further stations are processed. A cycle report is written as final record."
+    }
+  }
+}
