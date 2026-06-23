@@ -1,0 +1,8 @@
+/source_private/
+/vaults/verboten/source_private/
+*.pdf
+*.docx
+*.epub
+*.zip
+.env
+.DS_Store

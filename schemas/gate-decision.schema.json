@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "gate-decision.schema.json",
+  "title": "Gate Decision",
+  "description": "Schema for a gate card recording a decision at a specific station in an editorial flow cycle.",
+  "type": "object",
+  "required": [
+    "gateId",
+    "cycleId",
+    "station",
+    "date",
+    "evaluatedBy",
+    "gateCondition",
+    "decision"
+  ],
+  "properties": {
+    "gateId": {
+      "type": "string",
+      "description": "Unique identifier for this gate card, e.g. GATE-CYCLE-001-S5."
+    },
+    "cycleId": {
+      "type": "string",
+      "description": "Reference to the parent cycle report."
+    },
+    "station": {
+      "type": "object",
+      "required": ["number", "name"],
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 11,
+          "description": "Station number (1–11)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Station name."
+        }
+      }
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the gate was evaluated (YYYY-MM-DD)."
+    },
+    "evaluatedBy": {
+      "type": "string",
+      "description": "Name or role of the evaluator. If AI-assisted, note 'AI assistant — subject to human review'."
+    },
+    "gateCondition": {
+      "type": "string",
+      "description": "The specific condition this gate evaluates."
+    },
+    "evidenceEvaluated": {
+      "type": "string",
+      "description": "Description of what was assessed to make this decision."
+    },
+    "decision": {
+      "$ref": "#/definitions/statusOutcome"
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Explanation of the basis for the decision."
+    },
+    "nextAction": {
+      "type": "string",
+      "description": "Description of what should happen next as a result of this gate decision."
+    },
+    "override": {
+      "type": "object",
+      "description": "Override record, if the original decision was overridden.",
+      "required": ["overrideDecision", "overridingParty"],
+      "properties": {
+        "overrideDecision": {
+          "$ref": "#/definitions/statusOutcome"
+        },
+        "overridingParty": {
+          "type": "string",
+          "description": "Name or role of the party who overrode the decision."
+        },
+        "overrideRationale": {
+          "type": "string",
+          "description": "Brief reason for the override."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "statusOutcome": {
+      "type": "string",
+      "enum": ["PASS", "HOLD", "RETURN", "EXTRACT_ONLY", "PROPOSAL", "READY", "NO_EVENT", "STOP"],
+      "description": "One of the eight valid cycle outcomes."
+    }
+  }
+}
