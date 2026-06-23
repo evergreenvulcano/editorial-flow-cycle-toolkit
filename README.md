@@ -13,6 +13,7 @@ The product is the protected filesystem contract that governs how reading, AI au
 - No generated output may inherit, replace, flatten, summarize away, imitate, or commercialize the source voice.
 - No source file is committed in this branch.
 - A Content Desk gate is absent by default and must be explicitly installed later.
+- For new protected-source branches, follow [`docs/SOURCE_VAULT_BRANCH_PROTOCOL.md`](docs/SOURCE_VAULT_BRANCH_PROTOCOL.md).
 
 ## Branch scope
 
